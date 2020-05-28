@@ -1,6 +1,7 @@
 source "https://rubygems.org"
 
 gem "dotenv"
+gem "twitter"
 
 group :development, :test do
   gem "byebug"
