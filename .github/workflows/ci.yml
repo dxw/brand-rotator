@@ -16,7 +16,9 @@ jobs:
           ruby-version: "2.7.x"
 
       - name: Install test dependencies
-        run: bundle install --frozen --jobs 4 --retry 3 --without development
+        run: |
+          sudo apt-get install libmagickwand-dev
+          bundle install --frozen --jobs 4 --retry 3 --without development
 
       - name: Run tests
         run: rake test
