@@ -1,4 +1,3 @@
-require "base64"
 require "twitter"
 require_relative "../../brand_rotator"
 require_relative "../image"
@@ -17,22 +16,13 @@ module BrandRotator::Twitter
     end
 
     def update_profile_image(asset_name)
-      asset_path = File.expand_path(
-        File.join(
-          File.dirname(__FILE__),
-          "..", # twitter
-          "..", # brand_rotator
-          "..", # lib
-          "assets",
-          "#{asset_name}.svg"
-        )
+      image = BrandRotator::Image.open_svg_asset_as_base64_png(
+        asset_name,
+        width: 400
       )
 
-      image = BrandRotator::Image.open_svg_as_png(asset_path, size: "400x400")
-      image_data = Base64.strict_encode64(image)
-
       twitter_client.update_profile_image(
-        image_data,
+        image,
         include_entities: false,
         skip_status: true
       )
