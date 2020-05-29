@@ -1,6 +1,7 @@
 require "twitter"
 require_relative "../../brand_rotator"
 require_relative "../image"
+require_relative "../theme"
 
 module BrandRotator::Twitter
   class Client
