@@ -1,5 +1,6 @@
 require "date"
-require_relative "../twitter"
+require_relative "../../brand_rotator"
+require_relative "../config"
 require_relative "./client"
 
 module BrandRotator::Twitter
@@ -26,9 +27,10 @@ module BrandRotator::Twitter
       seconds_since_epoch = today.to_time.to_i
       days_since_epoch = seconds_since_epoch / (60 * 60 * 24)
 
-      image_index_for_today = days_since_epoch % PROFILE_IMAGES.count
+      image_index_for_today = days_since_epoch %
+        BrandRotator::Config::THEMES.count
 
-      PROFILE_IMAGES[image_index_for_today]
+      BrandRotator::Config::THEMES[image_index_for_today].fetch(:marque)
     end
   end
 end

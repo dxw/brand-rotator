@@ -25,23 +25,21 @@ describe BrandRotator::Twitter::Action do
 
       expect(subject.client)
         .to receive(:update_profile_image)
-        .with(BrandRotator::Twitter::PROFILE_IMAGES.first)
+        .with(BrandRotator::Config::THEMES.first.fetch(:marque))
 
       subject.run
     end
 
     it "uses the number of days since epoch to determine which image to use for the new profile image" do
       days_since_epoch = 24
+      expected_index = days_since_epoch % BrandRotator::Config::THEMES.count
 
       allow(DateTime).to receive(:now) {
         epoch.next_day(days_since_epoch) + Rational(1, 2)
       }
-
-      expected_index = days_since_epoch % BrandRotator::Twitter::PROFILE_IMAGES.count
-
       expect(subject.client)
         .to receive(:update_profile_image)
-        .with(BrandRotator::Twitter::PROFILE_IMAGES[expected_index])
+        .with(BrandRotator::Config::THEMES[expected_index].fetch(:marque))
 
       subject.run
     end

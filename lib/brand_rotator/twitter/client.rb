@@ -1,7 +1,7 @@
 require "base64"
 require "twitter"
+require_relative "../../brand_rotator"
 require_relative "../image"
-require_relative "../twitter"
 
 module BrandRotator::Twitter
   class Client
