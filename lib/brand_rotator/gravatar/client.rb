@@ -18,6 +18,24 @@ module BrandRotator::Gravatar
       )
     end
 
+    def addresses
+      response = call("grav.addresses")
+      response.keys
+    end
+
+    def upload_image(asset_name)
+      image = BrandRotator::Image.open_svg_asset_as_base64_png(
+        asset_name,
+        width: 4096
+      )
+
+      call("grav.saveData", data: image, rating: 0)
+    end
+
+    def use_image(image_id, addresses)
+      call("grav.useUserimage", userimage: image_id, addresses: addresses)
+    end
+
     def test
       call("grav.test", test: true)
     end
