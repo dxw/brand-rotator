@@ -1,0 +1,35 @@
+name: Rotate branding
+
+on:
+  schedule:
+    - cron: 00 04 * * *
+
+env:
+  GRAVATAR_EMAIL: ${{ secrets.GRAVATAR_EMAIL }}
+  GRAVATAR_PASSWORD: ${{ secrets.GRAVATAR_PASSWORD }}
+  TWITTER_CONSUMER_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
+  TWITTER_CONSUMER_SECRET: ${{ secrets.TWITTER_CONSUMER_SECRET }}
+  TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+  TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
+
+jobs:
+  rotate_branding:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: "2.7.x"
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get install libmagickwand-dev
+          bundle install --frozen --jobs 4 --retry 3 --without development test
+
+      - name: Rotate Gravatar branding
+        run: rake brand_rotator:gravatar
+
+      - name: Rotate Twitter branding
+        run: rake brand_rotator:twitter
