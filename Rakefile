@@ -14,5 +14,18 @@ begin
 rescue LoadError
 end
 
+require "brand_rotator/gravatar/action"
+require "brand_rotator/twitter/action"
+
 task default: %i[test]
 task test: %i[standard spec]
+
+namespace :brand_rotator do
+  task gravatar: %i[dotenv] do
+    BrandRotator::Gravatar::Action.new.run
+  end
+
+  task twitter: %i[dotenv] do
+    BrandRotator::Twitter::Action.new.run
+  end
+end
