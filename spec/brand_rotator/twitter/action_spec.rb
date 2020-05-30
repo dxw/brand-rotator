@@ -24,7 +24,7 @@ describe BrandRotator::Twitter::Action do
       allow(DateTime).to receive(:now) { epoch + Rational(1, 2) }
 
       expect(subject.client)
-        .to receive(:update_profile_image)
+        .to receive(:update_profile_image!)
         .with(BrandRotator::Config::THEMES.first.fetch(:marque))
 
       subject.run
@@ -38,7 +38,7 @@ describe BrandRotator::Twitter::Action do
         epoch.next_day(days_since_epoch) + Rational(1, 2)
       }
       expect(subject.client)
-        .to receive(:update_profile_image)
+        .to receive(:update_profile_image!)
         .with(BrandRotator::Config::THEMES[expected_index].fetch(:marque))
 
       subject.run

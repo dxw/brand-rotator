@@ -16,7 +16,7 @@ module BrandRotator::Twitter
       }
     end
 
-    def update_profile_image(asset_name)
+    def update_profile_image!(asset_name)
       image = BrandRotator::Image.open_svg_asset_as_base64_png(
         asset_name,
         width: 400

@@ -19,11 +19,11 @@ module BrandRotator::Gravatar
     def use_image(image_id)
       addresses = client.addresses
 
-      client.use_image(image_id, addresses)
+      client.use_image!(image_id, addresses)
     end
 
     def upload_image
-      image_id = client.upload_image(image)
+      image_id = client.upload_image!(image)
       image_id
     end
 

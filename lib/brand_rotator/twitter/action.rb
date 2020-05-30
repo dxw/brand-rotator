@@ -18,7 +18,7 @@ module BrandRotator::Twitter
     private
 
     def update_profile
-      client.update_profile_image(profile_image)
+      client.update_profile_image!(profile_image)
     end
 
     def profile_image

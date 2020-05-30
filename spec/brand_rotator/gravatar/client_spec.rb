@@ -51,7 +51,7 @@ describe BrandRotator::Gravatar::Client do
     end
   end
 
-  describe "#upload_image" do
+  describe "#upload_image!" do
     before do
       allow_any_instance_of(BrandRotator::Gravatar::Client)
         .to receive(:xmlrpc_client) { xmlrpc_client }
@@ -65,11 +65,11 @@ describe BrandRotator::Gravatar::Client do
           hash_including(data: instance_of(String), rating: 0)
         )
 
-      subject.upload_image(File.join("..", "spec", "fixtures", "image"))
+      subject.upload_image!(File.join("..", "spec", "fixtures", "image"))
     end
   end
 
-  describe "#use_image" do
+  describe "#use_image!" do
     before do
       allow_any_instance_of(BrandRotator::Gravatar::Client)
         .to receive(:xmlrpc_client) { xmlrpc_client }
@@ -86,7 +86,7 @@ describe BrandRotator::Gravatar::Client do
           hash_including(userimage: image_id, addresses: addresses)
         )
 
-      subject.use_image(image_id, addresses)
+      subject.use_image!(image_id, addresses)
     end
   end
 

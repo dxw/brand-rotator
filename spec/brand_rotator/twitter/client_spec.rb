@@ -12,7 +12,7 @@ describe BrandRotator::Twitter::Client do
     end
   end
 
-  describe "#update_profile_image" do
+  describe "#update_profile_image!" do
     before do
       allow_any_instance_of(BrandRotator::Twitter::Client)
         .to receive(:twitter_client) { twitter_client }
@@ -23,7 +23,7 @@ describe BrandRotator::Twitter::Client do
         .to receive(:update_profile_image)
         .with(instance_of(String), include_entities: false, skip_status: true)
 
-      subject.update_profile_image(File.join("..", "spec", "fixtures", "image"))
+      subject.update_profile_image!(File.join("..", "spec", "fixtures", "image"))
     end
   end
 end

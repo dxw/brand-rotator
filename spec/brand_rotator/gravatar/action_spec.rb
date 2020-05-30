@@ -12,8 +12,9 @@ describe BrandRotator::Gravatar::Action do
     allow_any_instance_of(BrandRotator::Gravatar::Client)
       .to receive(:addresses) { addresses }
     allow_any_instance_of(BrandRotator::Gravatar::Client)
-      .to receive(:upload_image) { image_id }
-    allow_any_instance_of(BrandRotator::Gravatar::Client).to receive(:use_image)
+      .to receive(:upload_image!) { image_id }
+    allow_any_instance_of(BrandRotator::Gravatar::Client)
+      .to receive(:use_image!)
   end
 
   describe ".new" do
@@ -31,7 +32,7 @@ describe BrandRotator::Gravatar::Action do
       allow(DateTime).to receive(:now) { epoch + Rational(1, 2) }
 
       expect(subject.client)
-        .to receive(:upload_image)
+        .to receive(:upload_image!)
         .with(BrandRotator::Config::THEMES.first.fetch(:marque))
 
       subject.run
@@ -45,7 +46,7 @@ describe BrandRotator::Gravatar::Action do
         epoch.next_day(days_since_epoch) + Rational(1, 2)
       }
       expect(subject.client)
-        .to receive(:upload_image)
+        .to receive(:upload_image!)
         .with(BrandRotator::Config::THEMES[expected_index].fetch(:marque))
 
       subject.run
@@ -53,7 +54,7 @@ describe BrandRotator::Gravatar::Action do
 
     it "associates the uploaded image with all email addresses on the account" do
       expect(subject.client)
-        .to receive(:use_image)
+        .to receive(:use_image!)
         .with("123456", ["test@example.com", "another@example.com"])
 
       subject.run
