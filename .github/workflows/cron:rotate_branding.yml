@@ -29,7 +29,29 @@ jobs:
           bundle install --frozen --jobs 4 --retry 3 --without development test
 
       - name: Rotate Gravatar branding
+        id: gravatar
         run: rake brand_rotator:gravatar
+        continue-on-error: true
 
       - name: Rotate Twitter branding
+        id: twitter
         run: rake brand_rotator:twitter
+        continue-on-error: true
+
+      - name: Report failures
+        run: |
+          [[ "${{ steps.gravatar.outcome }}" == "success" ]]
+          GRAVATAR_SUCCESS=$?
+
+          [[ "${{ steps.twitter.outcome }}" == "success" ]]
+          TWITTER_SUCCESS=$?
+
+          [[ "$GRAVATAR_SUCCESS" == "0" ]] ||
+            echo "::error::Gravatar rotation did not succeed"
+          [[ "$TWITTER_SUCCESS" == "0" ]] ||
+            echo "::error::Twitter rotation did not succeed"
+
+          (
+            [[ "$GRAVATAR_SUCCESS" == "0" ]] &&
+            [[ "$TWITTER_SUCCESS" == "0" ]]
+          ) || exit 1
