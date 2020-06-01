@@ -1,3 +1,4 @@
+require "tempfile"
 require "twitter"
 require_relative "../../brand_rotator"
 require_relative "../image"
@@ -17,16 +18,26 @@ module BrandRotator::Twitter
     end
 
     def update_profile_image!(asset_name)
-      image = BrandRotator::Image.open_svg_asset_as_base64_png(
+      image = BrandRotator::Image.open_svg_asset_as_png(
         asset_name,
         width: 400
       )
 
-      twitter_client.update_profile_image(
-        image,
-        include_entities: false,
-        skip_status: true
-      )
+      file = Tempfile.new("twitter_profile.png")
+
+      begin
+        file.write(image)
+        file.rewind
+
+        twitter_client.update_profile_image(
+          file,
+          include_entities: false,
+          skip_status: true
+        )
+      ensure
+        file.close
+        file.unlink
+      end
     end
   end
 end

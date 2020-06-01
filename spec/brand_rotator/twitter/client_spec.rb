@@ -1,4 +1,5 @@
 require "brand_rotator/twitter/client"
+require "tempfile"
 require "twitter"
 
 describe BrandRotator::Twitter::Client do
@@ -21,7 +22,7 @@ describe BrandRotator::Twitter::Client do
     it "updates the authenticated user's profile image" do
       expect(subject.twitter_client)
         .to receive(:update_profile_image)
-        .with(instance_of(String), include_entities: false, skip_status: true)
+        .with(instance_of(Tempfile), include_entities: false, skip_status: true)
 
       subject.update_profile_image!(File.join("..", "spec", "fixtures", "image"))
     end
