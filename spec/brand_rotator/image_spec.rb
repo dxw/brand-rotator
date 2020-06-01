@@ -37,6 +37,36 @@ describe BrandRotator::Image do
     end
   end
 
+  describe ".open_svg_asset_as_png" do
+    it "returns a PNG" do
+      image_name = File.join(
+        "..",
+        "spec",
+        "fixtures",
+        "image"
+      )
+
+      expect(subject.open_svg_asset_as_png(image_name, width: 100))
+        .to match(Regexp.new("^\x89PNG".force_encoding("binary")))
+    end
+
+    it "returns an image with the given dimensions" do
+      image_name = File.join(
+        "..",
+        "spec",
+        "fixtures",
+        "image"
+      )
+
+      blob = subject.open_svg_asset_as_png(image_name, width: 123)
+
+      image = Magick::Image.from_blob(blob).first
+
+      expect(image.columns).to eql(123)
+      expect(image.rows).to eql(123)
+    end
+  end
+
   describe ".open_svg_as_png" do
     it "returns a PNG" do
       image_path = File.expand_path(
