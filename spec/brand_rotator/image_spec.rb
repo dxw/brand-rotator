@@ -1,6 +1,6 @@
 require "base64"
 require "brand_rotator/image"
-require "RMagick"
+require "rmagick"
 
 describe BrandRotator::Image do
   subject { BrandRotator::Image }

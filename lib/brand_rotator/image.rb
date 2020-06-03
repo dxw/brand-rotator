@@ -1,5 +1,5 @@
 require "base64"
-require "RMagick"
+require "rmagick"
 require_relative "../brand_rotator"
 
 module BrandRotator
