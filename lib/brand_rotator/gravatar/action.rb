@@ -23,8 +23,7 @@ module BrandRotator::Gravatar
     end
 
     def upload_image
-      image_id = client.upload_image!(image)
-      image_id
+      client.upload_image!(image)
     end
 
     def image
