@@ -9,8 +9,7 @@ module BrandRotator
         seconds_since_epoch = today.to_time.to_i
         days_since_epoch = seconds_since_epoch / (60 * 60 * 24)
 
-        index_for_today = days_since_epoch %
-          Config::THEMES.count
+        index_for_today = days_since_epoch % Config::THEMES.count
 
         Config::THEMES[index_for_today]
       end
