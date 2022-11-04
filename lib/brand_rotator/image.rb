@@ -26,17 +26,15 @@ module BrandRotator
       end
 
       def open_svg_as_png(svg_path, width: nil)
-        image_array = Magick::Image.read(svg_path) {
-          self.format = "SVG"
-          self.background_color = "transparent"
-        }
+        image_array = Magick::Image.read(svg_path) do |img|
+          img.format = "SVG"
+          img.background_color = "transparent"
+        end
         image = image_array.first
 
         image.resize_to_fit!(width) unless width.nil?
 
-        image.to_blob {
-          self.format = "PNG"
-        }
+        image.to_blob { |img| img.format = "PNG" }
       end
     end
   end
