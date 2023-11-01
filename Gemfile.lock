@@ -99,7 +99,7 @@ GEM
     unf_ext (0.0.7.7)
     unicode-display_width (2.4.2)
     webrick (1.7.0)
-    xmlrpc (0.3.2)
+    xmlrpc (0.3.3)
       webrick
 
 PLATFORMS
