@@ -1,5 +1,5 @@
 require_relative "../../brand_rotator"
-require_relative "./client"
+require_relative "client"
 
 module BrandRotator::Gravatar
   class Action
