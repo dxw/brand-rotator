@@ -1,7 +1,7 @@
 require "date"
 require_relative "../../brand_rotator"
 require_relative "../config"
-require_relative "./client"
+require_relative "client"
 
 module BrandRotator::Twitter
   class Action
