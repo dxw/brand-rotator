@@ -112,7 +112,7 @@ GEM
       naught (~> 1.1)
       simple_oauth (~> 0.3.0)
     unicode-display_width (2.5.0)
-    webrick (1.7.0)
+    webrick (1.8.2)
     xmlrpc (0.3.3)
       webrick
 
